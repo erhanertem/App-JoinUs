@@ -183,3 +183,115 @@
 
 -- INSERT INTO tweets (tweet_content,tweet_username) VALUES("this is my first tweet","coltscat");
 -- INSERT INTO tweets (tweet_content,tweet_username) VALUES("this is my second tweet","coltscat");
+
+-- LESSON: SECTION 11 THE POWER OF LOGICAL OPERATORS
+
+-- NOT EQUAL
+-- SELECT title, released_year FROM books WHERE released_year != 2017;
+-- SELECT title,author_lname FROM books;
+-- SELECT title,author_lname FROM books WHERE author_lname != "Carver";
+
+-- NOT LIKE
+-- SELECT title FROM books WHERE title LIKE "W%";
+-- SELECT title FROM books WHERE title NOT LIKE "W%";
+
+-- GREATER THAN
+-- SELECT * FROM books WHERE released_year > 2000 ORDER BY released_year;
+-- SELECT * FROM books WHERE released_year >= 2000 ORDER BY released_year;
+
+-- LESS THAN
+-- SELECT * FROM books WHERE released_year < 2000 ORDER BY released_year;
+-- SELECT * FROM books WHERE released_year <= 2000 ORDER BY released_year;
+
+-- AND &&
+-- SELECT title,author_lname,released_year FROM books WHERE author_lname="Eggers" AND released_year>2010;
+-- SELECT title,author_lname,released_year FROM books WHERE author_lname="Eggers" AND released_year>=2010 AND title LIKE "%novel%";
+
+-- OR ||
+-- SELECT title,author_lname,released_year FROM books WHERE author_lname="Eggers" || released_year>2010 &&author_lname !="Saunders";
+
+-- BETWEEN
+-- SELECT title, released_year FROM books WHERE released_year>=2004 && released_year<=2015;
+-- SELECT title, released_year FROM books WHERE released_year BETWEEN 2004 AND 2015;
+-- SELECT name, birthdt FROM people WHERE birthdt BETWEEN CAST('1980-01-01' AS DATETIME) AND CAST('2000-01-01' AS DATETIME);
+-- NOTE: When working with informal date strings, they need tobe casted as datetime to fullfill proper date conversion before proceeding with before operation
+
+-- IN 
+-- SELECT title, author_lname FROM books WHERE author_lname="Carver" || author_lname="Lahiri" || author_lname="Smith";
+-- SELECT title, author_lname FROM books WHERE author_lname IN ("Carver","Lahiri","Smith");
+-- SELECT title, author_lname, released_year FROM books WHERE released_year IN (2001,1985);
+
+-- NOT IN
+-- SELECT  title
+--        ,author_lname
+--        ,released_year
+-- FROM books
+-- WHERE released_year NOT IN (2001, 2003, 1985);
+
+-- SELECT  title
+--        ,author_lname
+--        ,released_year
+-- FROM books
+-- WHERE released_year != 2001
+-- AND released_year != 2003
+-- AND released_year != 1985);
+-- SELECT  title
+--        ,released_year
+-- FROM books
+-- WHERE released_year >= 2000
+-- AND released_year % 2 != 0;
+
+-- CASE STATEMENTS
+-- SELECT  title
+--        ,released_year
+--        ,CASE WHEN released_year >= 2000 THEN "Modern Lit"  ELSE "20th Century Lit" END AS genre
+-- FROM books;
+
+-- SELECT  title
+--        ,stock_quantity
+--        ,CASE WHEN stock_quantity BETWEEN 0 AND 50 THEN "*"
+--              WHEN stock_quantity BETWEEN 51 AND 100 THEN "**"  ELSE "***" END AS stock
+-- FROM books;
+
+-- Coding Challenge: LECTURE 195 QUIZ
+
+-- SELECT  10 != 10;
+-- SELECT  15 > 15 && 99-5 <= 94;
+-- SELECT  1 IN (5,3) || 9 BETWEEN 8 AND 10;
+
+SELECT  title, released_year
+FROM books
+WHERE released_year < 1980;
+
+SELECT  title, author_lname
+FROM books
+WHERE author_lname IN ("Eggers", "Chabon");
+
+SELECT  title
+       ,author_lname
+FROM books
+WHERE author_lname = "Lahiri" && released_year > 2000;
+
+SELECT  title
+       ,pages
+FROM books
+WHERE pages BETWEEN 100 AND 200;
+
+SELECT  author_lname
+FROM books
+WHERE author_lname LIKE "C%" || author_lname LIKE "S%";
+
+SELECT  title
+       ,author_lname
+       ,CASE WHEN title LIKE "%Stories%" THEN "Short Stories"
+             WHEN title IN ("Just Kids","A Heartbreaking Work of Staggering Genius") THEN "Memoir" 
+             ELSE "Novel" END AS type
+FROM books;
+
+SELECT  title
+       ,author_lname
+       ,CASE WHEN COUNT(*) < 2 THEN CONCAT(COUNT(*)," book")  ELSE CONCAT(COUNT(*)," books") END AS count
+FROM books
+GROUP BY  author_lname
+         ,author_fname
+ORDER BY author_lname;
