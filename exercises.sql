@@ -259,39 +259,231 @@
 -- SELECT  15 > 15 && 99-5 <= 94;
 -- SELECT  1 IN (5,3) || 9 BETWEEN 8 AND 10;
 
-SELECT  title, released_year
-FROM books
-WHERE released_year < 1980;
+-- SELECT  title, released_year
+-- FROM books
+-- WHERE released_year < 1980;
 
-SELECT  title, author_lname
-FROM books
-WHERE author_lname IN ("Eggers", "Chabon");
+-- SELECT  title, author_lname
+-- FROM books
+-- WHERE author_lname IN ("Eggers", "Chabon");
 
-SELECT  title
-       ,author_lname
-FROM books
-WHERE author_lname = "Lahiri" && released_year > 2000;
+-- SELECT  title
+--        ,author_lname
+-- FROM books
+-- WHERE author_lname = "Lahiri" && released_year > 2000;
 
-SELECT  title
-       ,pages
-FROM books
-WHERE pages BETWEEN 100 AND 200;
+-- SELECT  title
+--        ,pages
+-- FROM books
+-- WHERE pages BETWEEN 100 AND 200;
 
-SELECT  author_lname
-FROM books
-WHERE author_lname LIKE "C%" || author_lname LIKE "S%";
+-- SELECT  author_lname
+-- FROM books
+-- WHERE author_lname LIKE "C%" || author_lname LIKE "S%";
 
-SELECT  title
-       ,author_lname
-       ,CASE WHEN title LIKE "%Stories%" THEN "Short Stories"
-             WHEN title IN ("Just Kids","A Heartbreaking Work of Staggering Genius") THEN "Memoir" 
-             ELSE "Novel" END AS type
-FROM books;
+-- SELECT  title
+--        ,author_lname
+--        ,CASE WHEN title LIKE "%Stories%" THEN "Short Stories"
+--              WHEN title IN ("Just Kids","A Heartbreaking Work of Staggering Genius") THEN "Memoir" 
+--              ELSE "Novel" END AS type
+-- FROM books;
 
-SELECT  title
-       ,author_lname
-       ,CASE WHEN COUNT(*) < 2 THEN CONCAT(COUNT(*)," book")  ELSE CONCAT(COUNT(*)," books") END AS count
-FROM books
-GROUP BY  author_lname
-         ,author_fname
-ORDER BY author_lname;
+-- SELECT  title
+--        ,author_lname
+--        ,CASE WHEN COUNT(*) < 2 THEN CONCAT(COUNT(*)," book")  ELSE CONCAT(COUNT(*)," books") END AS count
+-- FROM books
+-- GROUP BY  author_lname
+--          ,author_fname
+-- ORDER BY author_lname;
+
+-- LESSON: SECTION 12 ONE TO MANY
+
+-- CREATE TABLE customers(
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     first_name VARCHAR(100),
+--     last_name VARCHAR(100),
+--     email VARCHAR(100)
+-- );
+
+-- CREATE TABLE orders(
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     order_date DATE,
+--     amount DECIMAL(8,2),
+--     customer_id INT,
+--     FOREIGN KEY(customer_id) REFERENCES customers(id) ON DELETE CASCADE;
+-- );
+
+-- INSERT INTO customers (first_name, last_name, email) 
+-- VALUES ('Boy', 'George', 'george@gmail.com'),
+--        ('George', 'Michael', 'gm@gmail.com'),
+--        ('David', 'Bowie', 'david@gmail.com'),
+--        ('Blue', 'Steele', 'blue@gmail.com'),
+--        ('Bette', 'Davis', 'bette@aol.com');
+       
+-- INSERT INTO orders (order_date, amount, customer_id)
+-- VALUES ('2016/02/10', 99.99, 1),
+--        ('2017/11/11', 35.50, 1),
+--        ('2014/12/12', 800.67, 2),
+--        ('2015/01/03', 12.50, 2),
+--        ('1999/04/11', 450.25, 5);
+
+-- INSERT INTO orders (order_date, amount, customer_id)
+-- VALUES ('2016/06/06', 33.67, 98);
+-- -- 98 fails as there is no correspondance in customers(id)
+
+-- SELECT  id
+-- FROM customers
+-- WHERE last_name = "Davis";
+
+-- SELECT  *
+-- FROM orders
+-- WHERE customer_id = 4;
+
+-- -- JOINED FORM
+-- SELECT  *
+-- FROM orders
+-- WHERE customer_id = (
+-- SELECT  id
+-- FROM customers
+-- WHERE last_name = "Davis");
+
+-- SELECT * from customers;
+-- SELECT * from orders;
+--  -- CROSS JOIN - totally meaningless
+--  SELECT * from cusotmers,order;
+-- -- IMPLICIT INNER JOIN
+-- SELECT  *
+-- FROM customers, orders
+-- WHERE customers.id = orders.customer_id; 
+
+-- SELECT  customers.id, first_name, last_name, order_date, amount
+-- FROM customers, orders
+-- WHERE customers.id = orders.customer_id; 
+
+-- EXPLICIT INNER JOIN
+-- SELECT  customers.id
+--        ,first_name
+--        ,last_name
+--        ,order_date
+--        ,amount
+-- FROM customers
+-- JOIN orders
+-- ON customers.id = orders.customer_id;
+-- SELECT  orders.id
+--        ,first_name
+--        ,last_name
+--        ,order_date
+--        ,amount
+-- FROM orders
+-- JOIN customers
+-- ON customers.id = orders.customer_id;
+-- SELECT  first_name
+--        ,last_name
+--        ,order_date
+--        ,SUM(amount) AS total_spent
+-- FROM customers
+-- JOIN orders
+-- ON customers.id = orders.customer_id
+-- GROUP BY orders.customer_id
+-- ORDER BY total_spent DESC;
+
+-- LEFT JOIN
+
+-- SELECT  first_name
+--        ,last_name
+--        ,order_date
+--        ,amount
+-- FROM customers
+-- LEFT JOIN orders
+-- ON customers.id = orders.customer_id;
+
+-- SELECT  first_name
+--        ,last_name
+--        ,IFNULL (SUM(amount), 0) AS total_spent
+-- FROM customers
+-- LEFT JOIN orders
+-- ON customers.id = orders.customer_id
+-- GROUP BY customers.id
+-- ORDER BY total_spent;
+
+-- RIGHT JOIN
+
+-- SELECT  *
+-- FROM customers
+-- RIGHT JOIN orders
+-- ON customers.id = orders.customer_id;
+
+-- Coding Challenge: LECTURE 216 QUIZ
+
+-- CREATE TABLE students (id INT AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(250));
+
+-- CREATE TABLE papers (title VARCHAR(250), grade INT, student_id INT, FOREIGN KEY(student_id) REFERENCES students(id)
+-- ON
+-- DELETE CASCADE);
+
+-- INSERT INTO students (first_name) VALUES 
+-- ('Caleb'), 
+-- ('Samantha'), 
+-- ('Raj'), 
+-- ('Carlos'), 
+-- ('Lisa');
+ 
+-- INSERT INTO papers (student_id, title, grade ) VALUES
+-- (1, 'My First Book Report', 60),
+-- (1, 'My Second Book Report', 75),
+-- (2, 'Russian Lit Through The Ages', 94),
+-- (2, 'De Montaigne and The Art of The Essay', 98),
+-- (4, 'Borges and Magical Realism', 89);
+-- -- EXPLICIT INNER JOIN
+-- SELECT  first_name
+--        ,title
+--        ,grade
+-- FROM students, papers
+-- WHERE students.id = papers.student_id
+-- ORDER BY grade DESC;
+-- -- IMPLICIT INNER JOIN
+-- SELECT  first_name
+--        ,title
+--        ,grade
+-- FROM students INNER JOIN papers
+-- ON  students.id = papers.student_id
+-- ORDER BY grade DESC;
+
+-- SELECT  first_name
+--        ,title
+--        ,grade
+-- FROM students
+-- LEFT JOIN papers
+-- ON students.id = papers.student_id;
+
+-- SELECT  first_name
+--        ,IFNULL(title,"MISSING") AS title
+--        ,IFNULL(grade,0) AS grade
+-- FROM students
+-- LEFT JOIN papers
+-- ON students.id = papers.student_id;
+
+-- SELECT  first_name
+--        ,IFNULL(AVG(grade),0) AS average
+-- FROM students
+-- LEFT JOIN papers
+-- ON students.id = papers.student_id GROUP BY students.id ORDER BY average DESC;
+
+-- SELECT  first_name
+--        ,IFNULL(AVG(grade),0)                                                    AS average
+--        ,CASE WHEN IFNULL(AVG(grade),0) >= 75 THEN "PASSING"  ELSE "FAILING" END AS passing_status
+-- FROM students
+-- LEFT JOIN papers
+-- ON students.id = papers.student_id
+-- GROUP BY  students.id
+-- ORDER BY average DESC;
+-- -- ALTERNATE NULL CHECK SOLUTION PER COLT
+-- SELECT  first_name
+--        ,IFNULL(AVG(grade),0)                                          AS average
+--        ,CASE WHEN AVG(grade) IS NULL THEN "FAILING"
+--              WHEN AVG(grade) >= 75 THEN "PASSING"  ELSE "FAILING" END AS passing_status
+-- FROM students
+-- LEFT JOIN papers
+-- ON students.id = papers.student_id
+-- GROUP BY  students.id
+-- ORDER BY average DESC;
