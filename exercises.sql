@@ -1,4 +1,4 @@
--- SECTION 9 MAGIC OF AGGREGATE FUNCTIONS
+-- LESSON: SECTION 9 MAGIC OF AGGREGATE FUNCTIONS
 -- min max usage
 -- SELECT min(released_year)
 -- FROM books;
@@ -52,7 +52,7 @@
 -- FROM books GROUP BY  released_year
 -- ORDER BY  released_year;
 
--- LECTURE 150 QUIZ
+-- Coding Challenge: LECTURE 150 QUIZ
 
 -- SELECT count(*)
 -- FROM books; 
@@ -99,3 +99,87 @@
 -- FROM books
 -- GROUP BY  released_year
 -- ORDER BY  released_year;
+
+-- LESSON: SECTION 10 REVISITING DATA TYPES
+
+-- CREATE TABLE dogs (name char(5), breed varchar(10));
+
+-- INSERT INTO dogs (name,breed) VALUES('bob','beagle');
+-- INSERT INTO dogs (name,breed) VALUES('robby','corgi');
+-- INSERT INTO dogs (name,breed) VALUES('Princess Jane','retriever');
+
+-- NOTE: unless shell opened in non-strict mode char(xxx) dictates how long would be the string and would throw error if not fixed.
+
+-- CREATE TABLE items (price DECIMAL(5,2));
+-- INSERT INTO items(price) VALUES(7);
+-- INSERT INTO items(price) VALUES(7987654);
+-- INSERT INTO items(price) VALUES(34.88);
+-- INSERT INTO items(price) VALUES(298.9999);
+-- INSERT INTO items(price) VALUES(1.9999);
+
+-- CREATE TABLE thingies (price FLOAT);
+-- INSERT INTO thingies(price) VALUES (88.45);
+-- INSERT INTO thingies(price) VALUES (8887.47);
+-- INSERT INTO thingies(price) VALUES (8898778776687.47);
+
+-- CREATE TABLE people (name VARCHAR(100), birthdate DATE, birthtime TIME, birthdt DATETIME);
+
+-- INSERT INTO people (name, birthdate,birthtime,birthdt) VALUES ("Padma", '1983-11-11', "10:07:35", "1983-11-11 10:07:35");
+-- INSERT INTO people (name, birthdate,birthtime,birthdt) VALUES ("Larry", '1943-12-25', "04:10:42", "1943-12-25 04:10:42");
+
+-- SELECT CURDATE();
+-- SELECT CURTIME();
+-- SELECT NOW();
+
+-- INSERT INTO people(name,birthdate,birthtime,birthdt) VALUES("Microwave", CURDATE(), CURTIME(), NOW());
+
+-- SELECT name,
+--         birthdate,
+--         DAYNAME(birthdate)
+-- FROM PEOPLE;
+
+-- SELECT DATE_FORMAT(birthdt,"%m/%d/%Y at %h:%m") FROM people;
+
+-- SELECT name, birthdate, DATEDIFF(NOW(),
+--         birthdate) AS "encompassed time"
+-- FROM people;
+
+-- SELECT birthdt,
+--          date_add(birthdt,
+--          interval 1 month)
+-- FROM people;
+
+-- SELECT birthdt,
+--          birthdt + interval 1 month
+-- FROM people; 
+-- -- date_add alternate
+-- SELECT birthdt,
+--          birthdt - interval 1 month
+-- FROM people; 
+-- -- datediff alternate
+
+-- CREATE TABLE comment2 (content VARCHAR(100), changed_at TIMESTAMP DEFAULT NOW() ON UPDATE NOW());
+-- INSERT INTO comment2 (content) VALUES("I may abondon!");
+-- INSERT INTO comment2 (content) VALUES("susysysysys");
+-- INSERT INTO comment2 (content) VALUES("I have to clear this!");
+-- UPDATE comment2 SET content="This is not going to be a giberish comment" WHERE content="susysysysys";
+-- SELECT content, changed_at FROM comment2 ORDER BY changed_at;
+
+-- Coding Challenge: LECTURE 173 QUIZ
+
+-- SELECT CURDATE();
+-- SELECT CURTIME();
+-- SELECT NOW();
+-- SELECT DAYOFWEEK(NOW())-1;
+-- -- dayofweek takes sunday as 1
+-- SELECT DATE_FORMAT(NOW(), "%w");
+-- -- date_format takes sunday as 0
+-- SELECT DATE_FORMAT(NOW(), "%W");
+-- SELECT DAYNAME(NOW());
+-- SELECT DATE_FORMAT(NOW(), "%m/%d/%Y");
+-- SELECT DATE_FORMAT(NOW(), "%M %D at %h:%i %p");
+
+-- CREATE TABLE tweets (tweet_content VARCHAR(140), tweet_username VARCHAR(20), tweet_created_at TIMESTAMP DEFAULT NOW());
+
+-- INSERT INTO tweets (tweet_content,tweet_username) VALUES("this is my first tweet","coltscat");
+-- INSERT INTO tweets (tweet_content,tweet_username) VALUES("this is my second tweet","coltscat");
