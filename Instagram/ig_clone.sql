@@ -104,3 +104,72 @@
 -- JOIN users
 -- ON photos.user_id = users.id;
 
+-- LESSON: SECTION 15 WORKING WITH LOTS OF INSTAGRAM DATA
+
+-- -- Action#1 - Find the oldest 5 registration dates 
+-- SELECT  *
+-- FROM users ORDER BY created_at
+-- LIMIT 5;
+
+-- -- Action#2 - Find out the most popular registration date
+-- SELECT  DAYNAME(created_at) AS week_day
+--        ,COUNT(DISTINCT created_at) AS total_occurance
+-- FROM users
+-- GROUP BY  week_day ORDER BY total_occurance DESC LIMIT 2;
+-- -- DISTINCT created_at VS * yields the same results
+-- SELECT  DAYNAME(created_at) AS week_day
+--        ,COUNT(*) AS total_occurance
+-- FROM users
+-- GROUP BY  week_day ORDER BY total_occurance DESC LIMIT 2;
+
+-- -- Action#3 - Identify users with no photos
+-- SELECT username FROM users LEFT JOIN photos on users.id=photos.user_id WHERE photos.id IS NULL ORDER BY username; 
+-- SELECT username FROM photos LEFT JOIN users on users.id=photos.user_id WHERE photos.id IS NULL ORDER BY username; 
+
+
+-- -- Action#4 - Most popular photo (and user who created it)
+
+-- SELECT  username
+--        ,photos.id
+--        ,image_URL
+--        ,COUNT(*) AS popularity
+-- FROM photos
+-- JOIN likes
+-- ON photos.id = likes.photo_id
+-- JOIN users
+-- ON users.id = photos.user_id
+-- GROUP BY  image_URL
+-- ORDER BY popularity DESC
+-- LIMIT 1;
+
+-- -- Action#5 - Calculate average number of photos per user
+
+-- -- total number of photos / total number of users
+-- SELECT  ((
+-- SELECT  COUNT(*)
+-- FROM photos) / (
+-- SELECT  COUNT(*)
+-- FROM users)) AS avg;
+
+-- -- Action#6 - Find the Top 5 hashtags
+-- SELECT  tags.tag_name
+--        ,COUNT(*) AS total_hashtags
+-- FROM photo_tags
+-- JOIN tags
+-- ON photo_tags.tag_id = tags.id
+-- GROUP BY  tags.id
+-- ORDER BY total_hashtags DESC
+-- LIMIT 5;
+
+-- -- Action#7 - Find the users(BOTS) which liked every single photo on the site
+-- SELECT  users.username
+--        ,COUNT(*) AS total_likes
+-- FROM likes
+-- JOIN users
+-- ON users.id = likes.user_id
+-- GROUP BY  users.id
+-- HAVING total_likes = (SELECT COUNT(*)
+-- FROM photos)
+-- ORDER BY username;
+-- -- NOTE: WHERE COULD NOT BE USED HERE AS IT HAS TO COME BEFORE GROUP BY. HERE, WE NEED TO HAVE IT AFTER GROUP BY sBLOCK. SO HAVING ... AN ALTERNATE OF WHERE NEEDS TO BE USED HERE.
+
