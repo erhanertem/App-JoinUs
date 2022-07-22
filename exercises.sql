@@ -610,3 +610,8 @@
 -- INNER JOIN series
 --     ON series.id = reviews.series_id
 -- ORDER BY title;
+
+-- LESSON: SECTION 14 INSTAGRAM DATABASE CLONE
+
+-- SEE INSTAGRAM FOLDER
+
