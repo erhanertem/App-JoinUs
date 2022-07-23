@@ -20,11 +20,31 @@ const connection = mysql.createConnection({
 // console.log("App is listening on port" + port);
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
-const q = "SELECT * FROM users";
+// // SELECTING DATA
+// const q = "SELECT * FROM users";
 
-connection.query(q, function (error, results, fields) {
-	if (error) throw error;
-	console.log(results);
+// connection.query(q, function (error, results, fields) {
+// 	if (error) throw error;
+// 	console.log(results);
+// });
+// connection.end();
+// // INSERTING DATA
+// const q = 'INSERT INTO users (email) VALUES ("rusty_the_dog@yahoo.com")';
+
+// connection.query(q, function (error, results, fields) {
+// 	if (error) throw error;
+// 	console.log(results);
+// });
+// connection.end();
+// INSERTING DATA GEN 2
+const person = {
+	email: "Jenny467@gmail.com",
+};
+// NOTE: Behind the scene mysql node actually interprets it as 'INSERT INTO users (email) VALUES ("Jenny467@gmail.com")`
+
+connection.query("INSERT INTO users SET ?", person, function (err, result) {
+	if (err) throw err;
+	console.log(result);
 });
 connection.end();
 
