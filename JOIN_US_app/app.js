@@ -36,21 +36,38 @@ const connection = mysql.createConnection({
 // 	console.log(results);
 // });
 // connection.end();
-// // INSERTING DATA GEN 2
-const person = {
-	email: faker.internet.email(),
-	created_at: faker.date.past(),
-};
-// NOTE: Behind the scene mysql node actually interprets it as 'INSERT INTO users (email) VALUES ("Jenny467@gmail.com")`
-const end_result = connection.query(
-	"INSERT INTO users SET ?",
-	person,
-	function (err, result) {
-		if (err) throw err;
-		console.log(result);
-	},
-);
-connection.end();
+// // INSERTING DATA GEN 2 - SINGLE INPUT
+// const person = {
+// 	email: faker.internet.email(),
+// 	created_at: faker.date.past(),
+// };
+// // NOTE: Behind the scene mysql node actually interprets it as 'INSERT INTO users (email) VALUES ("Jenny467@gmail.com")`
+// const end_result = connection.query(
+// 	"INSERT INTO users SET ?",
+// 	// NOTE: for ? syntax, refer to mysql node manuel for further information
+// 	person,
+// 	function (err, result) {
+// 		if (err) throw err;
+// 		console.log(result);
+// 	},
+// );
+// connection.end();
 
-console.log(end_result);
+// console.log(end_result);
 // Solicit the information sendby the mysql node to mysql
+
+// // INSERTING DATA GEN 2 - MULTIPLE INPUT
+// // mysql node documentation asks for an array for multiple inputs
+const data = [];
+for (let i = 0; i < 500; i++) {
+	data.push([faker.internet.email(), faker.date.past()]);
+}
+
+console.log(data);
+const q = "INSERT INTO users (email, created_at) VALUES ?";
+
+connection.query(q, [data], function (err, result) {
+	if (err) throw err;
+	console.log(result);
+});
+connection.end();
