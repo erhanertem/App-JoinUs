@@ -14,24 +14,34 @@ const connection = mysql.createConnection({
 	port: "3306", // mySQL db port
 }); //Set connection with mysql database called join_us @ port 3306
 
+// app.get("/", (req, res) => {
+// 	// Find count of users in db
+// 	const q = "SELECT COUNT(*) AS count FROM users";
+// 	connection.query(q, function (error, results) {
+// 		if (error) throw error;
+// 		let count = results[0].count;
+// 		res.send("We have " + count + " users in our db");
+// 	}); // Respond with the statement incorporating count info retreived from db
+// }); // localhost:8080/
+
 app.get("/", (req, res) => {
 	// Find count of users in db
 	const q = "SELECT COUNT(*) AS count FROM users";
 	connection.query(q, function (error, results) {
 		if (error) throw error;
 		let count = results[0].count;
-		res.send("We have " + count + " users in our db");
+		res.render("home", { data: count });
 	}); // Respond with the statement incorporating count info retreived from db
 }); // localhost:8080/
 
-app.get("/joke", (req, res) => {
-	const joke =
-		"<strong>What do you call a dog that does magic trocks?</strong><em> A labracadabrador.</em>";
-	console.log("REQUESTED THE JOKE ROUTE!");
-	res.send(joke);
-}); // localhost:8080/joke
+// app.get("/joke", (req, res) => {
+// 	const joke =
+// 		"<strong>What do you call a dog that does magic trocks?</strong><em> A labracadabrador.</em>";
+// 	console.log("REQUESTED THE JOKE ROUTE!");
+// 	res.send(joke);
+// }); // localhost:8080/joke
 
-app.get("/random_num", (req, res) => {
-	const num = Math.floor(Math.random() * 10) + 1;
-	res.send("Your lucky number is " + num);
-}); // localhost:8080/random_num
+// app.get("/random_num", (req, res) => {
+// 	const num = Math.floor(Math.random() * 10) + 1;
+// 	res.send("Your lucky number is " + num);
+// }); // localhost:8080/random_num
