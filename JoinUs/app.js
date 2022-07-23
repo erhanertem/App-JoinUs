@@ -1,7 +1,7 @@
 const mysql = require("mysql"); // Add mysql package
 const express = require("express"); // Add express package
 const app = express(); //Execute the express package
-
+app.set("view engine", "ejs"); // set the view engine to ejs for express
 app.listen(8080, function () {
 	console.log("App listening on port 8080!");
 }); //Set express to listen at port 8080 defaulting to localhost:8080 for a browser
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 
 app.get("/joke", (req, res) => {
 	const joke =
-		"What do you call a dog that does magic trocks? A labracadabrador.";
+		"<strong>What do you call a dog that does magic trocks?</strong><em> A labracadabrador.</em>";
 	console.log("REQUESTED THE JOKE ROUTE!");
 	res.send(joke);
 }); // localhost:8080/joke

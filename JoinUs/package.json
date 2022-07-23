@@ -9,6 +9,7 @@
 	"author": "Erhan ERTEM",
 	"license": "ISC",
 	"dependencies": {
+		"ejs": "^3.1.8",
 		"express": "^4.18.1",
 		"faker": "^5.5.3",
 		"mysql": "^2.18.1"
