@@ -58,16 +58,62 @@ const connection = mysql.createConnection({
 
 // // INSERTING DATA GEN 2 - MULTIPLE INPUT
 // // mysql node documentation asks for an array for multiple inputs
-const data = [];
-for (let i = 0; i < 500; i++) {
-	data.push([faker.internet.email(), faker.date.past()]);
-}
+// const data = [];
+// for (let i = 0; i < 500; i++) {
+// 	data.push([faker.internet.email(), faker.date.past()]);
+// }
 
-console.log(data);
-const q = "INSERT INTO users (email, created_at) VALUES ?";
+// console.log(data);
+// const q = "INSERT INTO users (email, created_at) VALUES ?";
 
-connection.query(q, [data], function (err, result) {
-	if (err) throw err;
-	console.log(result);
-});
-connection.end();
+// connection.query(q, [data], function (err, result) {
+// 	if (err) throw err;
+// 	console.log(result);
+// });
+// connection.end();
+
+// // Coding Challenge: LECTURE 299 QUIZ
+// //1st Challange
+// const q =
+// 	'SELECT DATE_FORMAT(created_at, "%b %D %Y") AS earliest_date FROM users ORDER BY created_at LIMIT 1';
+// connection.query(q, function (error, results) {
+// 	if (error) throw error;
+// 	console.log(results[0].earliest_date);
+// });
+// connection.end();
+
+// // 2nd Challange
+// const q = "SELECT email, created_at FROM users ORDER BY created_at LIMIT 1";
+// connection.query(q, function (error, results) {
+// 	if (error) throw error;
+// 	console.log(results[0].email);
+// });
+// connection.end();
+
+// //3rd Challange
+// const q =
+// 	"SELECT DATE_FORMAT(created_at, '%M') AS month, COUNT(*) AS count FROM users GROUP BY month ORDER BY count DESC";
+// connection.query(q, function (error, results) {
+// 	if (error) throw error;
+// 	console.log(results[0].month);
+// 	console.log(results[0].count);
+// });
+// connection.end();
+
+// //4th Challange
+// const q =
+// 	"SELECT COUNT(*) AS yahoo_users FROM users WHERE email LIKE '%yahoo.com'";
+// connection.query(q, function (error, results) {
+// 	if (error) throw error;
+// 	console.log(results[0].yahoo_users);
+// });
+// connection.end();
+
+// //5th Challange
+// const q =
+// 	"SELECT CASE WHEN email LIKE '%yahoo.com' THEN 'yahoo' WHEN email LIKE '%gmail.com' THEN 'gmail' WHEN email LIKE '%hotmail.com' THEN 'hotmail' ELSE 'other' END AS provider, COUNT(*) AS total_users FROM users GROUP BY provider ORDER BY total_users DESC";
+// connection.query(q, function (error, results) {
+// 	if (error) throw error;
+// 	console.log(results);
+// });
+// connection.end();
