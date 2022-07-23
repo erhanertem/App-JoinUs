@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 	connection.query(q, function (error, results) {
 		if (error) throw error;
 		let count = results[0].count;
-		res.render("home", { data: count });
+		res.render("home", { count: count });
 	}); // Respond with the statement incorporating count info retreived from db
 }); // localhost:8080/
 

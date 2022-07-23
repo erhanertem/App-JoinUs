@@ -1,6 +1,6 @@
 # Udemy MySQL Bootcamp Steve Colt workshop
 
-# JOIN US app
+# Objective: Prepare a fake DATABASE of 500 participants for JOIN US app
 
 Installed NPM package dependencies:
 

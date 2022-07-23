@@ -1,6 +1,6 @@
 # Udemy MySQL Bootcamp Steve Colt workshop
 
-# JOIN US app
+# Objective: Create the JOIN US app
 
 Installed NPM package dependencies:
 
