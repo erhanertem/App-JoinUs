@@ -15,7 +15,13 @@ const connection = mysql.createConnection({
 }); //Set connection with mysql database called join_us @ port 3306
 
 app.get("/", (req, res) => {
-	res.send("HELLO FROM OUR WEB APP!");
+	// Find count of users in db
+	const q = "SELECT COUNT(*) AS count FROM users";
+	connection.query(q, function (error, results) {
+		if (error) throw error;
+		let count = results[0].count;
+		res.send("We have " + count + " users in our db");
+	}); // Respond with the statement incorporating count info retreived from db
 }); // localhost:8080/
 
 app.get("/joke", (req, res) => {
