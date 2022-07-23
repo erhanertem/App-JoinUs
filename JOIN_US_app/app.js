@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
 	user: "root", // your root username
 	password: "password", // your root user's password
 	database: "join_us", // the name of your db
-	port: "3306",
+	port: "3306", // mySQL db port
 });
 // CHECK APP CONNECTION
 // const port = process.env.PORT || 5000;
@@ -36,9 +36,10 @@ const connection = mysql.createConnection({
 // 	console.log(results);
 // });
 // connection.end();
-// INSERTING DATA GEN 2
+// // INSERTING DATA GEN 2
 const person = {
 	email: faker.internet.email(),
+	created_at: faker.date.past(),
 };
 // NOTE: Behind the scene mysql node actually interprets it as 'INSERT INTO users (email) VALUES ("Jenny467@gmail.com")`
 
