@@ -42,9 +42,15 @@ const person = {
 	created_at: faker.date.past(),
 };
 // NOTE: Behind the scene mysql node actually interprets it as 'INSERT INTO users (email) VALUES ("Jenny467@gmail.com")`
-
-connection.query("INSERT INTO users SET ?", person, function (err, result) {
-	if (err) throw err;
-	console.log(result);
-});
+const end_result = connection.query(
+	"INSERT INTO users SET ?",
+	person,
+	function (err, result) {
+		if (err) throw err;
+		console.log(result);
+	},
+);
 connection.end();
+
+console.log(end_result);
+// Solicit the information sendby the mysql node to mysql
