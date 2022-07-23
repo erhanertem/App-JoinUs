@@ -1,7 +1,11 @@
 const mysql = require("mysql"); // Add mysql package
+// const bodyParser = require("body-parser"); //Add bodyparser API package
 const express = require("express"); // Add express package
 const app = express(); //Execute the express package
 app.set("view engine", "ejs"); // set the view engine to ejs for express
+// app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
+// bodyParser is no longer needed as urlencoded middleware is provided by express natively
+app.use(express.urlencoded({ extended: true })); // Use express native middleware
 app.listen(8080, function () {
 	console.log("App listening on port 8080!");
 }); //Set express to listen at port 8080 defaulting to localhost:8080 for a browser
@@ -14,16 +18,6 @@ const connection = mysql.createConnection({
 	port: "3306", // mySQL db port
 }); //Set connection with mysql database called join_us @ port 3306
 
-// app.get("/", (req, res) => {
-// 	// Find count of users in db
-// 	const q = "SELECT COUNT(*) AS count FROM users";
-// 	connection.query(q, function (error, results) {
-// 		if (error) throw error;
-// 		let count = results[0].count;
-// 		res.send("We have " + count + " users in our db");
-// 	}); // Respond with the statement incorporating count info retreived from db
-// }); // localhost:8080/
-
 app.get("/", (req, res) => {
 	// Find count of users in db
 	const q = "SELECT COUNT(*) AS count FROM users";
@@ -33,6 +27,33 @@ app.get("/", (req, res) => {
 		res.render("home", { count: count });
 	}); // Respond with the statement incorporating count info retreived from db
 }); // localhost:8080/
+
+app.post("/register", (req, res) => {
+	// console.log(req.body);
+	// console.log("POST REQUEST SENT TO /REGISTER EMAIL IS " + req.body.email);
+	// NOTE: name="email" @ input html tag is referred req.body.email
+	const person = { email: req.body.email };
+	connection.query(
+		"INSERT INTO users SET ?",
+		person,
+		function (error, results) {
+			if (error) throw error;
+			// console.log(results);
+			// res.send("Thanks for joining our wait list!");
+			res.redirect("/");
+		},
+	);
+}); // Define a post route
+
+// app.get("/", (req, res) => {
+// 	// Find count of users in db
+// 	const q = "SELECT COUNT(*) AS count FROM users";
+// 	connection.query(q, function (error, results) {
+// 		if (error) throw error;
+// 		let count = results[0].count;
+// 		res.send("We have " + count + " users in our db");
+// 	}); // Respond with the statement incorporating count info retreived from db
+// }); // localhost:8080/
 
 // app.get("/joke", (req, res) => {
 // 	const joke =
