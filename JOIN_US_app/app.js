@@ -38,7 +38,7 @@ const connection = mysql.createConnection({
 // connection.end();
 // INSERTING DATA GEN 2
 const person = {
-	email: "Jenny467@gmail.com",
+	email: faker.internet.email(),
 };
 // NOTE: Behind the scene mysql node actually interprets it as 'INSERT INTO users (email) VALUES ("Jenny467@gmail.com")`
 
@@ -47,13 +47,3 @@ connection.query("INSERT INTO users SET ?", person, function (err, result) {
 	console.log(result);
 });
 connection.end();
-
-// function generateAddress() {
-// 	console.log(faker.address.streetAddress());
-// 	console.log(faker.address.city());
-// 	console.log(faker.address.state());
-// }
-
-// generateAddress();
-// generateAddress();
-// generateAddress();
