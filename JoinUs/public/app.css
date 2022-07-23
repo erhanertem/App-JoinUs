@@ -50,7 +50,7 @@ button {
 	opacity: 0.8;
 }
 
-input[type="text"]:focus {
+input:focus {
 	outline: none;
 }
 
