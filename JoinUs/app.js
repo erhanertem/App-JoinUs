@@ -7,6 +7,7 @@ app.set("view engine", "ejs"); // set the view engine to ejs for express
 // app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 // bodyParser is no longer needed as urlencoded middleware is provided by express natively
 app.use(express.urlencoded({ extended: true })); // Use express native middleware
+// NOTE: If extended is false, you can not post "nested object" SUCH AS Nested Object = { person: { name: cw } } . If extended is true, you can do whatever way that you like.
 app.use(express.static(__dirname + "/public")); // Use express native middleware which serves static assets from a root directory. Basically, takes all the contents in the public directory and serve them so they are accessible by our views or from our javascript
 app.use(express.static(__dirname + "/img")); // Similar above, introduce the img folder to express
 app.listen(port, function () {
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 	}); // Respond with the statement incorporating count info retreived from db
 }); // localhost:8080/
 
+// Define a post route
 app.post("/register", (req, res) => {
 	// console.log(req.body);
 	// console.log("POST REQUEST SENT TO /REGISTER EMAIL IS " + req.body.email);
