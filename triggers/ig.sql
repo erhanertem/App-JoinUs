@@ -1,0 +1,8 @@
+-- SHOW DATABASES;
+-- USE ig_clone;
+-- SHOW TABLES;
+-- INSERT INTO follows(follower_id,followee_id) VALUES(4,4);
+-- NOTE: a follower could follow himself. WE would need a self-follow check trigger set up
+-- SOURCE triggers/ig_trigger.sql;
+-- INSERT INTO follows(follower_id,followee_id) VALUES(4,4);
+-- NOTE: a follower could not follow himself due to established trigger @ ig_trigger.sql
