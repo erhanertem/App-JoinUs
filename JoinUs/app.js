@@ -2,14 +2,15 @@ const mysql = require("mysql"); // Add mysql package
 // const bodyParser = require("body-parser"); //Add bodyparser API package
 const express = require("express"); // Add express package
 const app = express(); //Execute the express package
+const port = 8080;
 app.set("view engine", "ejs"); // set the view engine to ejs for express
 // app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 // bodyParser is no longer needed as urlencoded middleware is provided by express natively
 app.use(express.urlencoded({ extended: true })); // Use express native middleware
 app.use(express.static(__dirname + "/public")); // Use express native middleware which serves static assets from a root directory. Basically, takes all the contents in the public directory and serve them so they are accessible by our views or from our javascript
 app.use(express.static(__dirname + "/img")); // Similar above, introduce the img folder to express
-app.listen(8080, function () {
-	console.log("App listening on port 8080!");
+app.listen(port, function () {
+	console.log("App listening on port ${port}!");
 }); //Set express to listen at port 8080 defaulting to localhost:8080 for a browser
 
 const connection = mysql.createConnection({
