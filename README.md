@@ -1,12 +1,14 @@
-# Udemy The Ultimate MySQL Bootcamp: Go from SQL Beginner to Expert by Steve Colt
+### 👋 **I am Erhan ERTEM**
 
-## **Objectives**
+&emsp;
 
-- Cover the essential knowledge for SQL.
-- Prepare a fake DATABASE of 500 participants for JOIN US app.
-- Create a JOIN US app that registers new users to this fake DATABASE.
+## Udemy The Ultimate MySQL Bootcamp: Go from SQL Beginner to Expert by Steve Colt
 
-### **Erhan ERTEM**
+### **Objectives**
+
+- Cover the essential knowledge for SQL. `Found under workshop_exercises folder`
+- Prepare a fake DATABASE of 500 participants for JOIN US app. `Found under JoinUs_App_Prep_Data folder`
+- Create a JOIN US app that registers new users to this fake DATABASE. `Found under JoinUS_App folder`
 
 ---
 
