@@ -7,7 +7,7 @@
 ### **Objectives**
 
 - Prepare a fake DATABASE of 500 participants for JOIN US app. `Found under JoinUs_App_Prep_Data folder`
-- Create a JOIN US app that registers new users to this fake DATABASE. `Found under JoinUS_App folder`
+- Create a JOIN US app that registers new users to this fake DATABASE.
 
 ---
 
