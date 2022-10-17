@@ -11,7 +11,7 @@
 
 Run in bash `node app.js`
 
-![Screenshot](screenshot.gif)
+![Screenshot](screenshot.png)
 
 ---
 
